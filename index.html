@@ -10,33 +10,20 @@
   img {max-width:100%;border-radius:6px;display:block;}
 
   /* 导航栏 */
-  nav {
-    background:#111;color:#fff;padding:10px 20px;
-    position:sticky;top:0;z-index:1000;
-    display:flex;justify-content:space-between;align-items:center;
-  }
+  nav {background:#111;color:#fff;padding:10px 20px;position:sticky;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;}
   nav .brand {font-size:22px;font-weight:bold;}
   nav ul {list-style:none;margin:0;padding:0;display:flex;gap:20px;}
   nav ul li a {color:#fff;font-size:16px;}
   .menu-toggle {display:none;cursor:pointer;font-size:24px;color:#fff;}
 
   /* 模块 */
-  .section {padding:60px 20px;text-align:center;max-width:1400px;margin:0 auto;}
+  .section {padding:60px 20px;text-align:center;max-width:1100px;margin:0 auto;}
   .section h2 {margin-bottom:30px;position:relative;display:inline-block;}
-  .section h2::after {
-    content:'';display:block;width:50px;height:2px;background:#111;margin:10px auto 0;border-radius:2px;
-  }
-  .grid {
-    display:flex;flex-wrap:wrap;justify-content:center;
-    gap:30px;text-align:center;
-  }
-  .grid-item {
-    flex:1 1 250px;min-width:250px;
-    background:#f5f5f5;padding:15px;border-radius:8px;
-    transition:transform 0.3s, box-shadow 0.3s;
-  }
+  .section h2::after {content:'';display:block;width:50px;height:2px;background:#111;margin:10px auto 0;border-radius:2px;}
+  .grid {display:flex;flex-wrap:wrap;justify-content:center;gap:20px;text-align:center;}
+  .grid-item {flex:1 1 220px;min-width:220px;background:#f5f5f5;padding:15px;border-radius:8px;transition:transform 0.3s, box-shadow 0.3s;}
   .grid-item:hover {transform:translateY(-5px);box-shadow:0 6px 15px rgba(0,0,0,0.2);}
-  .grid-item img {height:auto; max-height:250px; object-fit:cover; margin-bottom:10px;}
+  .grid-item img {height:160px;object-fit:cover;margin-bottom:10px;}
 
   /* Hero */
   .hero {background:linear-gradient(135deg,#f0f0f0,#e0e0e0);padding:100px 20px;}
@@ -81,11 +68,6 @@
     .menu-toggle {display:block;}
     .grid-item {flex:1 1 100%;}
   }
-
-  @media(min-width:769px){
-    nav ul {flex-direction: row !important; position:static !important; background:none !important; max-height:none !important;}
-    .menu-toggle {display:none;}
-  }
 </style>
 </head>
 <body>
@@ -100,6 +82,7 @@
     <li><a href="portfolio.html">Portfolio</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="about.html">About</a></li>
+    <li><a href="faq.html">FAQ</a></li>
   </ul>
 </nav>
 
