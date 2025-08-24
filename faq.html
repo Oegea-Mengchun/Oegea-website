@@ -1,0 +1,245 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oegea - FAQ</title>
+<style>
+  body {margin:0;font-family:Arial,sans-serif;background:#fff;color:#111;}
+  a {text-decoration:none;color:inherit;}
+  img {max-width:100%;border-radius:6px;display:block;}
+
+  /* 导航栏 */
+  nav {background:#111;color:#fff;padding:10px 20px;position:sticky;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;}
+  nav .brand {font-size:22px;font-weight:bold;}
+  nav ul {list-style:none;margin:0;padding:0;display:flex;gap:20px;}
+  nav ul li a {color:#fff;font-size:16px;}
+  .menu-toggle {display:none;cursor:pointer;font-size:24px;color:#fff;}
+
+  /* Section */
+  .section {padding:60px 20px;text-align:center;max-width:900px;margin:0 auto;}
+  .section h2 {margin-bottom:30px;position:relative;display:inline-block;}
+  .section h2::after {content:'';display:block;width:50px;height:2px;background:#111;margin:10px auto 0;border-radius:2px;}
+
+  /* FAQ 手风琴 */
+  .accordion {text-align:left;margin-top:40px;}
+  .accordion-item {background:#f5f5f5;margin-bottom:10px;border-radius:8px;overflow:hidden;transition:0.3s;}
+  .accordion-header {padding:15px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:bold;font-size:16px;}
+  .accordion-header:hover {background:#e0e0e0;}
+  .accordion-header span.arrow {transition: transform 0.3s;}
+  .accordion-content {max-height:0;overflow:hidden;padding:0 20px;background:#fff;transition:max-height 0.3s ease;}
+  .accordion-content p {margin:15px 0;}
+
+  /* Footer */
+  footer {background:#111;text-align:center;padding:20px;color:#ccc;font-size:14px;}
+  footer .social-icons {margin-top:15px;display:flex;justify-content:center;gap:25px;}
+  footer .social-icons svg {width:40px;height:40px;fill:#ccc;transition: transform 0.3s, fill 0.3s;}
+  footer .social-icons svg:hover {transform: scale(1.2);fill:#fff;}
+
+  /* 响应式 */
+  @media(max-width:768px){
+    nav ul {flex-direction: column; position: absolute; top:55px; right:0; background: rgba(17,17,17,0.95); width:180px; max-height:0; overflow:hidden; transition: max-height 0.3s ease; border-radius:0 0 5px 5px;}
+    nav ul.show { max-height:400px; }
+    nav ul li { text-align:left; padding:12px 15px; border-top:1px solid #222; }
+    .menu-toggle {display:block;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="brand">Oegea</div>
+  <span class="menu-toggle" onclick="toggleMenu()">☰</span>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+  </ul>
+</nav>
+
+<!-- Hero Section -->
+<section class="section hero">
+  <h1>Frequently Asked Questions</h1>
+  <p>Here we answer the most common questions about our digital patterns and services.</p>
+</section>
+
+<!-- FAQ Section -->
+<section class="section">
+  <div class="accordion">
+    <!-- Example item -->
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>What type of products do you provide?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>We provide digital patterns (CAD/PDF/PRJ). Customers can use them directly for production or send to factories.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>Which garments can be made?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>Including T-shirts, shirts, skirts, jackets, etc. Custom designs are also supported.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>What sizes are supported?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>Supports international sizes XXS/XS/S/M/L/XL/XXL, or custom sizing on request.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>Can I customize special or complex designs?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>Yes, we provide custom designs and special size services.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>How long until I receive my pattern?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>Standard delivery: 1–5 days. Complex designs may take longer.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>What file formats are delivered?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>We provide PDF/CAD/PRJ files, ready to use.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>How can I pay?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>Payments are accepted via PayPal and other international secure channels.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>Is payment safe?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>All payments go through secure international platforms to ensure safety.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>Do you offer refunds?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>After delivery, refunds are not available. However, major errors in files can be corrected or redone free of charge.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>How to use the files?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>Files can be opened in design software or sent directly to factories, no extra conversion needed.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>Can I use the pattern for multiple productions?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>Yes, the digital pattern can be used for multiple orders or factories.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>How can I contact support?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>You can contact us via website form, email, or social media for assistance.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <span>Do you provide technical guidance?</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="accordion-content">
+        <p>Yes, we provide guidance for using files and adjusting sizes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 Oegea Pattern Studio. All rights reserved.</p>
+  <div class="social-icons">
+    <a href="https://x.com/oegeastudio?s=21" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0022.4.36a9.06 9.06 0 01-2.88 1.1A4.52 4.52 0 0016.5 0c-2.5 0-4.5 2-4.5 4.5 0 .35.04.7.1 1.03A12.8 12.8 0 013 1.67a4.52 4.52 0 001.4 6.03 4.48 4.48 0 01-2.05-.56v.06c0 2.2 1.57 4.03 3.65 4.45a4.52 4.52 0 01-2.04.08c.57 1.78 2.22 3.08 4.17 3.12A9.05 9.05 0 012 19.54 12.76 12.76 0 008.29 21c7.55 0 11.68-6.26 11.68-11.68 0-.18 0-.36-.01-.54A8.35 8.35 0 0023 3z"/></svg>
+    </a>
+    <a href="https://t.me/glamyon" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 6.62 5.37 12 12 12s12-5.38 12-12c0-6.63-5.37-12-12-12zm5.44 8.66l-1.78 8.39c-.13.61-.47.76-.95.47l-2.63-1.94-1.27 1.22c-.14.14-.25.25-.51.25l.18-2.5 4.55-4.11c.2-.18-.04-.28-.31-.1l-5.63 3.55-2.42-.76c-.52-.16-.53-.52.11-.77l9.45-3.64c.44-.15.83.11.69.77z"/></svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){
+  const ul = document.querySelector('nav ul');
+  ul.classList.toggle('show');
+}
+
+// Accordion functionality
+const headers = document.querySelectorAll('.accordion-header');
+headers.forEach(header => {
+  header.addEventListener('click', () => {
+    const content = header.nextElementSibling;
+    const arrow = header.querySelector('.arrow');
+    if(content.style.maxHeight){
+      content.style.maxHeight = null;
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+      document.querySelectorAll('.accordion-header span.arrow').forEach(a => a.style.transform='rotate(0deg)');
+      content.style.maxHeight = content.scrollHeight + "px";
+      arrow.style.transform = 'rotate(90deg)';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
