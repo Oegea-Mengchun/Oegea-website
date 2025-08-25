@@ -1,4 +1,4 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -21,20 +21,19 @@ button:hover {background:#0056b3;}
 </head>
 <body>
 
-<!-- 密码保护界面 -->
+<!-- 密码保护 -->
 <div class="container" id="passwordContainer">
   <h1>Enter Password</h1>
   <input type="password" id="pagePassword" placeholder="Enter Password">
   <button onclick="checkPassword()">Unlock</button>
 </div>
 
-<!-- 主生成器界面 -->
+<!-- 主界面 -->
 <div class="container hidden" id="mainContent">
   <h1>INVOICE Generator</h1>
 
   <label>Invoice Number</label>
   <input type="text" id="invoiceNumber" readonly>
-
   <label>Invoice Date (Hong Kong Time)</label>
   <input type="text" id="invoiceDate" readonly>
 
@@ -60,7 +59,6 @@ button:hover {background:#0056b3;}
       </tr>
     </thead>
     <tbody>
-      <!-- 制版服务 -->
       <tr>
         <td>
           <select class="service" data-type="pattern">
@@ -73,7 +71,6 @@ button:hover {background:#0056b3;}
         <td><input type="number" class="unitPrice" value="0" min="0" step="0.01"></td>
         <td class="subtotal">0.00</td>
       </tr>
-      <!-- 放码服务 -->
       <tr>
         <td>
           <select class="service" data-type="grading">
@@ -86,7 +83,6 @@ button:hover {background:#0056b3;}
         <td><input type="number" class="unitPrice" value="0" min="0" step="0.01"></td>
         <td class="subtotal">0.00</td>
       </tr>
-      <!-- 其他服务 -->
       <tr>
         <td>
           <select class="service" data-type="other">
@@ -135,10 +131,12 @@ button:hover {background:#0056b3;}
   <button onclick="changePassword()">Change Password</button>
 </div>
 
-<!-- jsPDF CDN -->
+<!-- jsPDF + autoTable -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <script>
+window.jsPDF = window.jspdf.jsPDF; // 确保 jsPDF 可用
+
 // 密码功能
 let pagePassword = '123456';
 function checkPassword() {
@@ -158,9 +156,7 @@ function changePassword(){
 }
 
 // 发票号和日期
-function generateInvoiceNumber() {
-  return 'OE-' + Date.now();
-}
+function generateInvoiceNumber() { return 'OE-' + Date.now(); }
 function getHKTime() {
   const now = new Date();
   const utc = now.getTime() + now.getTimezoneOffset()*60000;
@@ -195,9 +191,8 @@ function generatePDF(){
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // 标题
   doc.setFontSize(22);
-  doc.setTextColor(0, 51, 153);
+  doc.setTextColor(0,51,153);
   doc.text("INVOICE", 105, 20, {align:"center"});
 
   doc.setFontSize(12);
@@ -244,7 +239,6 @@ function generatePDF(){
   y+=6;
   doc.text(document.getElementById('notes').value, 14, y);
 
-  // 页脚品牌
   doc.setFontSize(10);
   doc.setTextColor(100);
   doc.text("Oegea Pattern Studio - www.oegea.site", 105, 290, {align:'center'});
@@ -252,6 +246,5 @@ function generatePDF(){
   doc.save(`Invoice_${document.getElementById('invoiceNumber').value}.pdf`);
 }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </body>
 </html>
