@@ -1,0 +1,231 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oegea Invoice Generator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<style>
+  body {font-family: Arial, sans-serif; background:#f7f7f7; margin:0; padding:0;}
+  .container {max-width:900px; margin:20px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+  h1 {text-align:center; margin-bottom:10px; font-size:1.8em;}
+  .notice {text-align:center; color:red; font-weight:bold; margin-bottom:20px;}
+  label {display:block; margin-top:10px; font-weight:bold;}
+  input, select, textarea {width:100%; padding:10px; margin-top:5px; border-radius:4px; border:1px solid #ccc; box-sizing:border-box; font-size:1em;}
+  table {width:100%; border-collapse:collapse; margin-top:20px;}
+  th, td {border:1px solid #ccc; padding:10px; text-align:center; font-size:0.95em;}
+  th {background:#f0f0f0;}
+  .total-row td {font-weight:bold;}
+  button {margin-top:20px; padding:12px 24px; background:#111; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:1em;}
+  button:hover {background:#333;}
+  .flex-box {display:flex; justify-content:space-between; gap:20px; margin-top:20px;}
+  .flex-box > div {flex:1;}
+  .table-wrapper {overflow-x:auto;} /* ✅ 表格在小屏幕可横向滚动 */
+
+  /* ✅ 手机端优化 */
+  @media (max-width: 768px) {
+    .container {padding:15px; margin:10px;}
+    h1 {font-size:1.4em;}
+    .flex-box {flex-direction:column;}
+    .flex-box > div {width:100%;}
+    input, select, textarea {font-size:0.9em;}
+    th, td {font-size:0.85em; padding:6px;}
+    button {width:100%; font-size:1em; padding:14px;}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Oegea Invoice Generator</h1>
+  <p class="notice">NOT A FORMAL INVOICE – Rough Quotation Only</p>
+
+  <label>Invoice Number</label>
+  <input type="text" id="invoiceNumber" readonly>
+
+  <label>Invoice Date (Hong Kong Time)</label>
+  <input type="text" id="invoiceDate" readonly>
+
+  <h2>Invoice Information</h2>
+  <div class="flex-box">
+    <div>
+      <h3>Seller Information</h3>
+      <p>
+        Oegea Pattern Studio<br>
+        Email: Support@oegea.site<br>
+        Website: www.oegea.site
+      </p>
+    </div>
+    <div>
+      <h3>Customer Information</h3>
+      <label>Customer Name</label>
+      <input type="text" id="customerName">
+      <label>Company</label>
+      <input type="text" id="customerCompany">
+      <label>Email</label>
+      <input type="email" id="customerEmail">
+    </div>
+  </div>
+
+  <h2>Invoice Items</h2>
+  <div class="table-wrapper">
+    <table id="itemsTable">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Quantity</th>
+          <th>Unit Price (USD)</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <select class="service" data-type="pattern">
+              <option value="Basic Pattern" data-price="100">Basic Pattern - $100</option>
+              <option value="Medium Pattern" data-price="150">Medium Pattern - $150</option>
+              <option value="Complex Pattern" data-price="200">Complex Pattern - $200</option>
+            </select>
+          </td>
+          <td><input type="number" class="quantity" value="1" min="1"></td>
+          <td><input type="number" class="unitPrice" value="100" readonly></td>
+          <td class="subtotal">100.00</td>
+        </tr>
+        <tr>
+          <td>
+            <select class="service" data-type="grading">
+              <option value="Basic Grading" data-price="10">Basic Grading - $10/size</option>
+              <option value="Medium Grading" data-price="20">Medium Grading - $20/size</option>
+              <option value="Complex Grading" data-price="30">Complex Grading - $30/size</option>
+            </select>
+          </td>
+          <td><input type="number" class="quantity" value="1" min="1"></td>
+          <td><input type="number" class="unitPrice" value="10" readonly></td>
+          <td class="subtotal">10.00</td>
+        </tr>
+        <tr>
+          <td>
+            <select class="service" data-type="other">
+              <option value="Size Adjustment">Size Adjustment (TBD)</option>
+              <option value="Custom Request">Custom Request (TBD)</option>
+              <option value="Sample Garment Suggestions">Sample Garment Suggestions (TBD)</option>
+            </select>
+          </td>
+          <td><input type="number" class="quantity" value="1" disabled></td>
+          <td><input type="number" class="unitPrice" value="0" disabled></td>
+          <td class="subtotal">—</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="3">Total</td>
+          <td id="totalAmount">110.00</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <label>Payment Terms</label>
+  <input type="text" id="paymentTerms" value="50% upfront, 50% upon delivery">
+
+  <label>Notes / Remarks</label>
+  <textarea id="notes" rows="4" placeholder="Other services require discussion"></textarea>
+
+  <button onclick="generatePDF()">Download Invoice PDF</button>
+</div>
+
+<script>
+const { jsPDF } = window.jspdf;
+
+function generateInvoiceNumber() {
+  return 'OE-' + Date.now();
+}
+function getHKTime() {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utc + 8*3600000).toISOString().slice(0,10);
+}
+document.getElementById('invoiceNumber').value = generateInvoiceNumber();
+document.getElementById('invoiceDate').value = getHKTime();
+
+function updateTotals() {
+  const rows = document.querySelectorAll('#itemsTable tbody tr');
+  let total = 0;
+  rows.forEach(row=>{
+    const type = row.querySelector('.service').dataset.type;
+    if(type==='pattern' || type==='grading'){
+      const qty = parseFloat(row.querySelector('.quantity').value) || 0;
+      const price = parseFloat(row.querySelector('.unitPrice').value) || 0;
+      const subtotal = qty*price;
+      row.querySelector('.subtotal').innerText = subtotal.toFixed(2);
+      total += subtotal;
+    } else {
+      row.querySelector('.subtotal').innerText = '—';
+    }
+  });
+  document.getElementById('totalAmount').innerText = total.toFixed(2);
+}
+document.querySelectorAll('.service').forEach(sel=>{
+  sel.addEventListener('change', e=>{
+    const row = e.target.closest('tr');
+    const price = parseFloat(e.target.selectedOptions[0].dataset.price)||0;
+    if(e.target.dataset.type!=='other'){
+      row.querySelector('.unitPrice').value = price;
+    }
+    updateTotals();
+  });
+});
+document.querySelectorAll('.quantity').forEach(input=>{
+  input.addEventListener('input', updateTotals);
+});
+updateTotals();
+
+function generatePDF(){
+  updateTotals();
+  const doc = new jsPDF();
+
+  doc.setFontSize(14);
+  doc.text("Oegea Pattern Studio", 14, 20);
+  doc.setFontSize(10);
+  doc.text("NOT A FORMAL INVOICE – Rough Quotation Only", 14, 26);
+  doc.text("Invoice Number: " + document.getElementById('invoiceNumber').value, 14, 34);
+  doc.text("Invoice Date (HK Time): " + document.getElementById('invoiceDate').value, 14, 40);
+
+  doc.setFontSize(12);
+  doc.text("Seller Information", 14, 50);
+  doc.setFontSize(10);
+  doc.text("Oegea Pattern Studio", 14, 56);
+  doc.text("Email: Support@oegea.site", 14, 62);
+  doc.text("Website: www.oegea.site", 14, 68);
+
+  doc.setFontSize(12);
+  doc.text("Customer Information", 120, 50);
+  doc.setFontSize(10);
+  doc.text("Name: " + document.getElementById('customerName').value, 120, 56);
+  doc.text("Company: " + document.getElementById('customerCompany').value, 120, 62);
+  doc.text("Email: " + document.getElementById('customerEmail').value, 120, 68);
+
+  doc.autoTable({
+    startY: 80,
+    head:[["Service","Quantity","Unit Price (USD)","Subtotal"]],
+    body: Array.from(document.querySelectorAll('#itemsTable tbody tr')).map(row=>{
+      const service = row.querySelector('.service').value;
+      const qty = row.querySelector('.quantity').value || "-";
+      const price = row.querySelector('.unitPrice').value || "-";
+      const subtotal = row.querySelector('.subtotal').innerText;
+      return [service, qty, price, subtotal];
+    })
+  });
+
+  doc.setFontSize(12);
+  doc.text("Total: $" + document.getElementById('totalAmount').innerText, 150, doc.lastAutoTable.finalY + 10);
+
+  doc.setFontSize(10);
+  doc.text("Payment Terms: " + document.getElementById('paymentTerms').value, 14, doc.lastAutoTable.finalY + 20);
+  doc.text("Notes: " + document.getElementById('notes').value, 14, doc.lastAutoTable.finalY + 28);
+
+  doc.save("Oegea_Invoice.pdf");
+}
+</script>
+</body>
+</html>
