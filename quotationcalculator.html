@@ -1,4 +1,3 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,47 +6,52 @@
 <title>Oegea Quotation Calculator</title>
 <style>
 body {font-family: Arial, sans-serif; background:#f7f7f7; margin:0; padding:0;}
-.container {max-width:900px; margin:60px auto 20px; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.container {max-width:900px; margin:80px auto 20px; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);}
 h1,h2 {text-align:center; margin-bottom:15px;}
 label {display:block; margin-top:10px; font-weight:bold;}
-input, select, textarea, button {width:100%; padding:8px; margin-top:5px; border-radius:4px; border:1px solid #ccc; box-sizing:border-box;}
+input, select, button {width:100%; padding:8px; margin-top:5px; border-radius:4px; border:1px solid #ccc; box-sizing:border-box;}
 table {width:100%; border-collapse:collapse; margin-top:10px;}
 th, td {border:1px solid #ccc; padding:10px; text-align:center;}
 th {background:#e0f0ff;}
-.total-row td {font-weight:bold;}
 button {padding:10px; margin-top:10px; background:#007BFF; color:#fff; border:none; border-radius:6px; cursor:pointer;}
 button:hover {background:#0056b3;}
 .note {font-size:0.9em; color:#555; margin-top:3px;}
-.nav-buttons {position: fixed; top: 10px; width: 100%; display: flex; justify-content: space-between; padding: 0 10px; z-index:10000;}
-.nav-buttons button {width:auto; min-width:120px; margin:0; padding:8px 15px;}
 @media(max-width:600px){
   th,td {font-size:12px; padding:6px;}
-  .nav-buttons button {font-size:12px; padding:6px 10px; min-width:90px;}
 }
+.top-buttons {position: fixed; top: 10px; left: 10px; display: flex; gap: 10px; z-index: 1000;}
+.top-buttons a {background: #007BFF; color: #fff; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 14px;}
+.top-buttons a:hover {background:#0056b3;}
+.lang-select {position: fixed; top: 10px; right: 10px; z-index: 1000;}
+.lang-select select {padding: 6px 10px; border-radius: 6px; font-size: 14px; cursor: pointer; background: #fff; border: 1px solid #007BFF; color: #007BFF;}
 </style>
 </head>
 <body>
 
-<!-- 导航按钮 -->
-<div class="nav-buttons">
-  <button onclick="window.location.href='https://oegea.site/'">Back to Homepage</button>
-  <button onclick="window.location.href='newportfolio.html'">View Portfolio</button>
+<div class="top-buttons">
+  <a href="https://oegea.site" target="_blank">Home</a>
+  <a href="newportfolio.html" target="_blank">Case Studies</a>
+</div>
+
+<div class="lang-select">
+  <select id="languageSelect">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+    <option value="pt">Português</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+  </select>
 </div>
 
 <div class="container">
-  <h1>Oegea Quotation Calculator</h1>
-  <p class="note">All prices are default values for reference only. Actual cost may vary after consultation.</p>
+  <h1 id="title">Oegea Quotation Calculator</h1>
+  <p class="note" id="note1">All prices are default values for reference only. Actual cost may vary after consultation.</p>
 
-  <h2>Pattern Service</h2>
-  <p class="note">Choose the required pattern service level. Default prices are reference only.</p>
+  <h2 id="patternTitle">Pattern Service</h2>
+  <p class="note" id="patternNote">Choose the required pattern service level. Default prices are reference only.</p>
   <table id="patternTable">
     <thead>
-      <tr>
-        <th>Service</th>
-        <th>Quantity</th>
-        <th>Unit Price (USD)</th>
-        <th>Subtotal</th>
-      </tr>
+      <tr><th>Service</th><th>Quantity</th><th>Unit Price (USD)</th><th>Subtotal</th></tr>
     </thead>
     <tbody>
       <tr>
@@ -65,16 +69,11 @@ button:hover {background:#0056b3;}
     </tbody>
   </table>
 
-  <h2>Grading Service</h2>
-  <p class="note">Select grading level and enter number of sizes. Default unit price is reference only.</p>
+  <h2 id="gradingTitle">Grading Service</h2>
+  <p class="note" id="gradingNote">Select grading level and enter number of sizes. Default unit price is reference only.</p>
   <table id="gradingTable">
     <thead>
-      <tr>
-        <th>Service</th>
-        <th>Quantity (Sizes)</th>
-        <th>Unit Price (USD)</th>
-        <th>Subtotal</th>
-      </tr>
+      <tr><th>Service</th><th>Quantity (Sizes)</th><th>Unit Price (USD)</th><th>Subtotal</th></tr>
     </thead>
     <tbody>
       <tr>
@@ -92,16 +91,11 @@ button:hover {background:#0056b3;}
     </tbody>
   </table>
 
-  <h2>Other Services</h2>
-  <p class="note">Optional services. Prices not included; discuss separately.</p>
+  <h2 id="otherTitle">Other Services</h2>
+  <p class="note" id="otherNote">Optional services. Prices not included; discuss separately.</p>
   <table id="otherTable">
     <thead>
-      <tr>
-        <th>Service</th>
-        <th>Quantity</th>
-        <th>Unit Price</th>
-        <th>Subtotal</th>
-      </tr>
+      <tr><th>Service</th><th>Quantity</th><th>Unit Price</th><th>Subtotal</th></tr>
     </thead>
     <tbody>
       <tr>
@@ -119,120 +113,98 @@ button:hover {background:#0056b3;}
     </tbody>
   </table>
 
-  <h2>Total</h2>
-  <p class="note">Automatically calculated from Pattern and Grading services.</p>
+  <h2 id="totalTitle">Total</h2>
+  <p class="note" id="totalNote">Automatically calculated from Pattern and Grading services.</p>
   <p><strong>Total Amount: $<span id="totalAmount">110.00</span></strong></p>
 
-  <button onclick="generatePDF()">Download Quotation PDF</button>
+  <button id="pdfBtn">Download Quotation PDF</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
 <script>
+const translations={
+  en:{title:"Oegea Quotation Calculator",note1:"All prices are default values for reference only. Actual cost may vary after consultation.",patternTitle:"Pattern Service",patternNote:"Choose the required pattern service level. Default prices are reference only.",gradingTitle:"Grading Service",gradingNote:"Select grading level and enter number of sizes. Default unit price is reference only.",otherTitle:"Other Services",otherNote:"Optional services. Prices not included; discuss separately.",totalTitle:"Total",pdfNote:"This quotation is for reference only. Actual cost may vary after consultation."},
+  es:{title:"Calculadora de Cotización Oegea",note1:"Todos los precios son valores de referencia. El costo real puede variar tras la consulta.",patternTitle:"Servicio de Patrón",patternNote:"Elija el nivel de servicio de patrón requerido. Los precios predeterminados son solo referencia.",gradingTitle:"Servicio de Tallas",gradingNote:"Seleccione el nivel de tallas e ingrese el número de tallas. Precio unitario de referencia.",otherTitle:"Otros Servicios",otherNote:"Servicios opcionales. Precios a discutir.",totalTitle:"Total",pdfNote:"Este presupuesto es solo de referencia. El costo real puede variar."},
+  pt:{title:"Calculadora de Orçamento Oegea",note1:"Todos os preços são apenas de referência. O custo real pode variar após consulta.",patternTitle:"Serviço de Padrão",patternNote:"Escolha o nível de serviço de padrão necessário. Preços padrão apenas referência.",gradingTitle:"Serviço de Grade",gradingNote:"Selecione o nível de grade e insira o número de tamanhos. Preço unitário referência.",otherTitle:"Outros Serviços",otherNote:"Serviços opcionais. Preço a discutir.",totalTitle:"Total",pdfNote:"Esta cotação é apenas de referência. O custo real pode variar."},
+  fr:{title:"Calculateur de Devis Oegea",note1:"Tous les prix sont indicatifs. Le coût réel peut varier après consultation.",patternTitle:"Service de Patron",patternNote:"Choisissez le niveau de service de patron requis. Les prix par défaut sont à titre de référence.",gradingTitle:"Service de Gradation",gradingNote:"Sélectionnez le niveau de gradation et saisissez le nombre de tailles. Prix unitaire de référence.",otherTitle:"Autres Services",otherNote:"Services optionnels, prix à discuter.",totalTitle:"Total",pdfNote:"Ce devis est fourni à titre indicatif. Le coût réel peut varier."},
+  de:{title:"Oegea Angebotsrechner",note1:"Alle Preise sind Richtwerte. Tatsächliche Kosten können nach Absprache variieren.",patternTitle:"Muster-Service",patternNote:"Wählen Sie das erforderliche Musterservice-Level. Standardpreise nur Referenz.",gradingTitle:"Größen-Service",gradingNote:"Wählen Sie das Größenlevel und geben Sie die Anzahl der Größen ein. Standardpreis nur Referenz.",otherTitle:"Andere Dienstleistungen",otherNote:"Optionale Leistungen, Preis gesondert.",totalTitle:"Gesamt",pdfNote:"Dieses Angebot ist nur als Referenz zu verstehen. Die tatsächlichen Kosten können variieren."}
+};
+
+// 更新语言
+function updateLanguage(lang){
+  for(const key in translations[lang]){
+    const el=document.getElementById(key);
+    if(el) el.innerText=translations[lang][key];
+  }
+}
+document.getElementById('languageSelect').addEventListener('change', e=>updateLanguage(e.target.value));
+
 // 更新小计
 function updateTotals(){
-  let total = 0;
+  let total=0;
   document.querySelectorAll('.container table').forEach(table=>{
     table.querySelectorAll('tbody tr').forEach(row=>{
-      const qty = parseFloat(row.querySelector('.quantity')?.value)||0;
-      const price = parseFloat(row.querySelector('.unitPrice')?.value)||0;
-      const subtotal = qty*price;
-      const cell = row.querySelector('.subtotal');
-      if(cell){cell.innerText = subtotal ? subtotal.toFixed(2) : '—';}
-      total += subtotal;
+      const qty=parseFloat(row.querySelector('.quantity')?.value)||0;
+      const price=parseFloat(row.querySelector('.unitPrice')?.value)||0;
+      const subtotal=qty*price;
+      const cell=row.querySelector('.subtotal');
+      if(cell) cell.innerText=subtotal?subtotal.toFixed(2):'—';
+      total+=subtotal;
     });
   });
-  document.getElementById('totalAmount').innerText = total.toFixed(2);
+  document.getElementById('totalAmount').innerText=total.toFixed(2);
 }
-
-// 监听变化
-document.querySelectorAll('.quantity, .unitPrice').forEach(input=>input.addEventListener('input', updateTotals));
-document.querySelectorAll('.service').forEach(select=>select.addEventListener('change', e=>{
-  const price = parseFloat(e.target.selectedOptions[0].dataset.price)||0;
-  const row = e.target.closest('tr');
-  const inputPrice = row.querySelector('.unitPrice');
-  if(inputPrice && !inputPrice.disabled) inputPrice.value = price;
+document.querySelectorAll('.quantity, .unitPrice').forEach(input=>input.addEventListener('input',updateTotals));
+document.querySelectorAll('.service').forEach(select=>select.addEventListener('change',e=>{
+  const price=parseFloat(e.target.selectedOptions[0].dataset.price)||0;
+  const row=e.target.closest('tr');
+  const inputPrice=row.querySelector('.unitPrice');
+  if(inputPrice && !inputPrice.disabled) inputPrice.value=price;
   updateTotals();
 }));
 updateTotals();
 
-// 生成PDF
-function generatePDF(){
+// PDF生成
+async function generatePDF(){
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const doc=new jsPDF();
+  const lang=document.getElementById('languageSelect').value;
 
-  doc.setFontSize(26);
-  doc.setTextColor(0,51,153);
-  doc.setFont("helvetica","bold");
-  doc.text("OEGEA PATTERN STUDIO", 105, 20, {align:"center"});
-  doc.setFontSize(14);
-  doc.setFont("helvetica","normal");
-  doc.setTextColor(50);
-  doc.text("Quotation – For Reference Only", 105, 28, {align:"center"});
+  doc.setFont("helvetica","bold"); doc.setFontSize(26); doc.setTextColor(0,51,153);
+  doc.text("OEGEA PATTERN STUDIO",105,20,{align:"center"});
+  doc.setFont("helvetica","normal"); doc.setFontSize(14); doc.setTextColor(50);
+  doc.text(document.getElementById('title').innerText,105,28,{align:"center"});
+  doc.setFontSize(10); doc.setTextColor(100); 
+  doc.text(translations[lang].pdfNote,14,36);
 
-  let y = 36;
-
-  const patternNote = document.querySelector('#patternTable').previousElementSibling.innerText;
-  doc.setFontSize(11); doc.setTextColor(50);
-  doc.text(patternNote,14,y); y+=6;
-  doc.text("Pattern Service:",14,y); y+=6;
-  doc.autoTable({
-    startY:y,
-    head:[['Service','Quantity','Unit Price','Subtotal']],
-    body: Array.from(document.querySelectorAll('#patternTable tbody tr')).map(tr=>[
-      tr.querySelector('.service').value,
-      tr.querySelector('.quantity').value,
-      tr.querySelector('.unitPrice').value,
-      tr.querySelector('.subtotal').innerText
-    ]),
-    theme:'grid'
+  let y=42;
+  ['patternTable','gradingTable','otherTable'].forEach(tableId=>{
+    const table=document.getElementById(tableId);
+    doc.autoTable({
+      startY:y,
+      head:[Array.from(table.querySelectorAll('thead th')).map(th=>th.innerText)],
+      body:Array.from(table.querySelectorAll('tbody tr')).map(tr=>Array.from(tr.querySelectorAll('td')).map(td=>{
+        // 获取输入框或选择框的值
+        const input=td.querySelector('input');
+        const select=td.querySelector('select');
+        if(input) return input.value;
+        if(select) return select.options[select.selectedIndex].text;
+        return td.innerText;
+      })),
+      theme:'grid',
+      styles:{font:'helvetica',fontSize:10}
+    });
+    y=doc.lastAutoTable.finalY+6;
   });
-  y = doc.lastAutoTable.finalY + 6;
-
-  const gradingNote = document.querySelector('#gradingTable').previousElementSibling.innerText;
-  doc.setFontSize(11); doc.setTextColor(50);
-  doc.text(gradingNote,14,y); y+=6;
-  doc.text("Grading Service:",14,y); y+=6;
-  doc.autoTable({
-    startY:y,
-    head:[['Service','Quantity','Unit Price','Subtotal']],
-    body: Array.from(document.querySelectorAll('#gradingTable tbody tr')).map(tr=>[
-      tr.querySelector('.service').value,
-      tr.querySelector('.quantity').value,
-      tr.querySelector('.unitPrice').value,
-      tr.querySelector('.subtotal').innerText
-    ]),
-    theme:'grid'
-  });
-  y = doc.lastAutoTable.finalY + 6;
-
-  const otherNote = document.querySelector('#otherTable').previousElementSibling.innerText;
-  doc.setFontSize(11); doc.setTextColor(50);
-  doc.text(otherNote,14,y); y+=6;
-  doc.text("Other Services:",14,y); y+=6;
-  doc.autoTable({
-    startY:y,
-    head:[['Service','Quantity','Unit Price','Subtotal']],
-    body: Array.from(document.querySelectorAll('#otherTable tbody tr')).map(tr=>[
-      tr.querySelector('.service').value,
-      tr.querySelector('.quantity').value,
-      tr.querySelector('.unitPrice').value,
-      tr.querySelector('.subtotal').innerText
-    ]),
-    theme:'grid'
-  });
-  y = doc.lastAutoTable.finalY + 6;
 
   doc.setFontSize(12); doc.setFont("helvetica","bold");
-  doc.text(`Total Amount: $${document.getElementById('totalAmount').innerText}`,14,y);
-
-  doc.setFontSize(10);
-  doc.setTextColor(0,51,153);
-  doc.setFont("helvetica","bold");
-  doc.text("OEGEA PATTERN STUDIO – www.oegea.site – Excellence in Garment Pattern Design",105,290,{align:'center'});
-
+  doc.text(`${document.getElementById('totalTitle').innerText}: $${document.getElementById('totalAmount').innerText}`,14,y);
   doc.save(`Oegea_Quotation.pdf`);
 }
+
+document.getElementById('pdfBtn').addEventListener('click', generatePDF);
 </script>
 </body>
 </html>
